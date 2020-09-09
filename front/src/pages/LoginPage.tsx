@@ -24,7 +24,6 @@ const LoginPage: React.FC = () => {
     const user = await apiLogin(username, password)
     setHasLoginError(!user)
     if (user !== null) {
-      console.log({ from })
       history.push(from.pathname, { user })
     }
   }
