@@ -1,0 +1,59 @@
+version: '3'
+
+services:
+  api:
+    image: node:12-alpine
+    volumes:
+      - ./api:/app
+    working_dir: /app
+    command: yarn start:dev
+    depends_on:
+      - db
+    restart: always
+    environment:
+      NODE_ENV: development
+      DB_HOST: db
+      DB_NAME: rower-stats
+      DB_USER: root
+      DB_PASSWORD: root
+      USER_NAME: david
+      USER_PASSWORD: VerySecretPassword
+      COOKIE_DOMAIN: localhost
+      CORS_ORIGIN: 'http://localhost:3000'
+      JWT_TOKEN_SECRET: VerySecretToken
+      JWT_EXPIRATION_TIME: 3600
+    ports:
+      - 4000:3000
+
+  front:
+    image: node:12-alpine
+    volumes:
+      - ./front:/app
+    working_dir: /app
+    command: yarn start
+    stdin_open: true
+    depends_on:
+      - api
+    restart: always
+    environment:
+      PORT: 3000
+      REACT_APP_API_URL: http://localhost:4000
+    ports:
+      - 3000:3000
+
+  db:
+    restart: always
+    image: mariadb:10.3
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: rower-stats
+    volumes:
+      - mariadb-data:/var/lib/mysql
+
+  adminer:
+    image: adminer
+    ports:
+      - 8080:8080
+
+volumes:
+  mariadb-data:

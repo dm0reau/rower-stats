@@ -1,0 +1,50 @@
+name: Front CI
+
+on:
+  push:
+    branches: [ master ]
+    paths:
+    - 'front/**'
+
+jobs:
+  front-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Setup Node.js environment
+      uses: actions/setup-node@v2.1.1
+      with:
+        node-version: 12
+
+    - name: Front Install Dependencies
+      run: cd front && yarn install --frozen-lockfile
+
+    - name: Front Build
+      run: cd front && yarn build
+      env:
+        REACT_APP_API_URL: ${{ secrets.REACT_APP_API_URL }}
+
+    - name: Rsync Front files
+      uses: burnett01/rsync-deployments@4.1
+      with:
+        switches: -avzr --delete --exclude node_modules
+        path: front/
+        remote_path: ${{ secrets.REMOTE_APP_PATH }}/front/
+        remote_host: ${{ secrets.HOST }}
+        remote_port: ${{ secrets.PORT }}
+        remote_user: ${{ secrets.USERNAME }}
+        remote_key: ${{ secrets.KEY }}
+
+    - name: SSH Remote Commands
+      uses: appleboy/ssh-action@v0.1.3
+      with:
+        host: ${{ secrets.HOST }}
+        port: ${{ secrets.PORT }}
+        username: ${{ secrets.USERNAME }}
+        key: ${{ secrets.KEY }}
+        script: |
+          cd ${{ secrets.REMOTE_APP_PATH }}/front
+          ${{ secrets.YARN_BIN_PATH }} install --frozen-lockfile
+          sudo systemctl restart rower-stats-front.service

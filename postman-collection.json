@@ -1,0 +1,277 @@
+{
+	"info": {
+		"_postman_id": "c1d15e10-9d70-4d58-b201-de1063a8f1c4",
+		"name": "Rower Stats",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "fb74f8cf-9002-4d0c-9732-b055cdfc0544",
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {",
+							"    pm.response.to.have.status(201);",
+							"});",
+							"pm.test(\"Set auth token\", function () {",
+							"    pm.environment.set(\"token\", pm.response.json().accessToken);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"username\": \"david\",\n\t\"password\": \"VerySecretPassword\"\n}",
+					"options": {
+						"formdata": {},
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/auth/login",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create workout",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"strokes\": 100,\n    \"time\": 200,\n    \"distance\": 5,\n    \"kcal\": 100,\n    \"program\": \"fitness3\",\n    \"resistance\": 5\n}"
+				},
+				"url": {
+					"raw": "{{host}}/workouts/",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"workouts",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get workouts",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/workouts",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"workouts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get workout by ID",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{auth_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/workouts/1",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"workouts",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Workouts count",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{auth_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/workouts/count/2019/12",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"workouts",
+						"count",
+						"2019",
+						"12"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Kcal sum for month",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{auth_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/workouts/kcal-sum/2019/11",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"workouts",
+						"kcal-sum",
+						"2019",
+						"11"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete workout",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{auth_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:3000/workouts/4",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"workouts",
+						"4"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{token}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "21f548e6-ee60-4778-bde8-8a1286c969b6",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "81534196-a3ec-4b7a-9d38-4786f6393818",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "75138697-17a4-46cf-8f1c-91f9e874922a",
+			"key": "host",
+			"value": "http://localhost:3000",
+			"type": "string"
+		}
+	],
+	"protocolProfileBehavior": {}
+}

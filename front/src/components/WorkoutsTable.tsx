@@ -1,0 +1,57 @@
+import {
+  Paper,
+  styled,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+} from '@material-ui/core'
+import React from 'react'
+import { Workout } from '../api/interfaces/workout'
+
+interface Props {
+  workouts: Workout[]
+}
+
+const WorkoutsTable: React.FC<Props> = ({ workouts }) => {
+  const MyTable = styled(Table)({
+    minWidth: 650,
+  })
+
+  return (
+    <TableContainer component={Paper}>
+      <MyTable aria-label="workouts table">
+        <TableHead>
+          <TableRow>
+            <TableCell>Date</TableCell>
+            <TableCell align="right">Temps</TableCell>
+            <TableCell align="right">Distance parcourue</TableCell>
+            <TableCell align="right">Calories brulées</TableCell>
+            <TableCell align="right">Résistance</TableCell>
+            <TableCell align="right">Cadence</TableCell>
+            <TableCell align="right">Programme utilisé</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {workouts.map((workout) => (
+            <TableRow key={workout.id}>
+              <TableCell component="th" scope="row">
+                {workout.date}
+              </TableCell>
+              <TableCell align="right">{workout.time}</TableCell>
+              <TableCell align="right">{workout.distance}</TableCell>
+              <TableCell align="right">{workout.kcal}</TableCell>
+              <TableCell align="right">{workout.resistance}</TableCell>
+              <TableCell align="right">{workout.strokes}</TableCell>
+              <TableCell align="right">{workout.program}</TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </MyTable>
+    </TableContainer>
+  )
+}
+
+export default WorkoutsTable
