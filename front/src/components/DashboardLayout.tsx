@@ -1,5 +1,5 @@
-import { AppBar, Button, IconButton, Toolbar } from '@material-ui/core'
-import { Add as AddIcon, ExitToApp as ExitToAppIcon } from '@material-ui/icons'
+import { AppBar, Box, IconButton, styled, Toolbar } from '@material-ui/core'
+import { ExitToApp as ExitToAppIcon } from '@material-ui/icons'
 import React from 'react'
 import { Link, useHistory } from 'react-router-dom'
 import apiLogout from '../api/logout'
@@ -15,29 +15,32 @@ const DashboardLayout: React.FC = ({ children }) => {
     }
   }
 
+  const BodyBox = styled(Box)({
+    padding: '1rem',
+  })
+
+  const LogoutButton = styled(IconButton)({
+    position: 'absolute',
+    right: '1rem',
+  })
+
   return (
     <>
       <AppBar position="static">
         <Toolbar>
           <Link to="/">
-            <Button variant="outlined">
+            <IconButton>
               <AppIcon />
-            </Button>
-          </Link>
-          <Link to="/workouts/new">
-            <Button variant="contained">
-              <AddIcon />
-              Ajouter une séance
-            </Button>
+            </IconButton>
           </Link>
 
-          <IconButton edge="end" onClick={logout} color="secondary">
+          <LogoutButton onClick={logout}>
             <ExitToAppIcon />
-          </IconButton>
+          </LogoutButton>
         </Toolbar>
       </AppBar>
 
-      {children}
+      <BodyBox>{children}</BodyBox>
     </>
   )
 }

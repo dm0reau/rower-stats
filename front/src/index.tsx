@@ -1,4 +1,4 @@
-import { ThemeProvider } from '@material-ui/core'
+import { Box, Link, ThemeProvider } from '@material-ui/core'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import App from './App'
@@ -11,16 +11,16 @@ ReactDOM.render(
     <ThemeProvider theme={theme}>
       <App />
       <footer>
-        <div>
+        <Box>
           Logo made by
-          <a href="https://www.flaticon.com/authors/freepik" title="Freepik">
+          <Link href="https://www.flaticon.com/authors/freepik" title="Freepik">
             &nbsp;Freepik
-          </a>
+          </Link>
           &nbsp;from
-          <a href="https://www.flaticon.com/" title="Flaticon">
+          <Link href="https://www.flaticon.com/" title="Flaticon">
             &nbsp;www.flaticon.com
-          </a>
-        </div>
+          </Link>
+        </Box>
       </footer>
     </ThemeProvider>
   </React.StrictMode>,
