@@ -1,4 +1,11 @@
-import { AppBar, Box, IconButton, styled, Toolbar } from '@material-ui/core'
+import {
+  AppBar,
+  Box,
+  Container,
+  IconButton,
+  styled,
+  Toolbar,
+} from '@material-ui/core'
 import { ExitToApp as ExitToAppIcon } from '@material-ui/icons'
 import React from 'react'
 import { Link, useHistory } from 'react-router-dom'
@@ -15,6 +22,13 @@ const DashboardLayout: React.FC = ({ children }) => {
     }
   }
 
+  const AppContainer = styled(Container)({
+    backgroundColor: '#FFF',
+    padding: 0,
+    height: '100vh',
+    boxShadow: '5px 5px 8px 0px rgba(0,0,0,0.75)',
+  })
+
   const BodyBox = styled(Box)({
     padding: '1rem',
   })
@@ -25,7 +39,7 @@ const DashboardLayout: React.FC = ({ children }) => {
   })
 
   return (
-    <>
+    <AppContainer maxWidth="md">
       <AppBar position="static">
         <Toolbar>
           <Link to="/">
@@ -41,7 +55,7 @@ const DashboardLayout: React.FC = ({ children }) => {
       </AppBar>
 
       <BodyBox>{children}</BodyBox>
-    </>
+    </AppContainer>
   )
 }
 

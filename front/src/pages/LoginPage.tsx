@@ -45,15 +45,17 @@ const LoginPage: React.FC = () => {
             alignItems="center"
           >
             <Typography variant="h4">Login</Typography>
-            <TextField
+            <FormTextField
               id="username"
               label="Utilisateur"
+              required={true}
               value={username}
               onChange={(event) => setUsername(event.target.value)}
             />
-            <TextField
+            <FormTextField
               id="password"
               type="password"
+              required={true}
               label="Mot de passe"
               value={password}
               onChange={(event) => setPassword(event.target.value)}
@@ -73,6 +75,7 @@ const LoginPage: React.FC = () => {
 }
 
 const FormBox = styled(Box)({
+  backgroundColor: '#FFF',
   minHeight: '100vh',
   display: 'flex',
   flexDirection: 'column',
@@ -84,6 +87,10 @@ const FormGrid = styled(Grid)({
   border: '1px solid grey',
   padding: '1rem',
   borderRadius: 10,
+})
+
+const FormTextField = styled(TextField)({
+  marginTop: 10,
 })
 
 const ConnectionButton = styled(Button)({

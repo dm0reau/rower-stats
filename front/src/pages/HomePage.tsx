@@ -8,12 +8,16 @@ import DashboardLayout from '../components/DashboardLayout'
 import WorkoutsTable from '../components/WorkoutsTable'
 
 const HomePage: React.FC = () => {
-  const { data } = useSwr<Workout[]>('workouts', apiFetcher)
+  const { data: lastWorkout } = useSwr<Workout>('workouts/last', apiFetcher)
 
   return (
     <DashboardLayout>
       <AddFab />
-      {data ? <WorkoutsTable workouts={data} /> : <CircularProgress />}
+      {lastWorkout ? (
+        <WorkoutsTable workouts={[lastWorkout]} />
+      ) : (
+        <CircularProgress />
+      )}
     </DashboardLayout>
   )
 }
