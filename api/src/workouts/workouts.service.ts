@@ -22,6 +22,10 @@ export class WorkoutsService {
     return this.workoutsRepo.findOne(id)
   }
 
+  async findLast(): Promise<Workout> {
+    return this.workoutsRepo.findOne({ order: { date: 'DESC' } })
+  }
+
   async count(): Promise<number> {
     return this.workoutsRepo.count()
   }

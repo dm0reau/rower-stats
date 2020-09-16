@@ -47,6 +47,15 @@ export class WorkoutsController {
     return await this.workoutsService.getKcalSumForMonth(year, month)
   }
 
+  @Get('last')
+  async getLastWorkout(): Promise<Workout> {
+    const workout = await this.workoutsService.findLast()
+    if (!workout) {
+      throw new NotFoundException("There's no workouts")
+    }
+    return workout
+  }
+
   @Get(':id')
   async getWorkout(
     @Param('id', new ParseIntPipe()) workoutId: number,
