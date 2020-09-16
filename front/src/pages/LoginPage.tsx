@@ -10,6 +10,7 @@ import Alert from '@material-ui/lab/Alert'
 import React, { FormEvent, useState } from 'react'
 import { useHistory, useLocation } from 'react-router'
 import apiLogin from '../api/login'
+import LogoCredits from '../components/LogoCredits'
 
 const LoginPage: React.FC = () => {
   const [username, setUsername] = useState('')
@@ -29,39 +30,45 @@ const LoginPage: React.FC = () => {
   }
 
   return (
-    <FormBox>
-      {hasLoginError && (
-        <ErrorAlert severity="error">
-          Vos identifiants semblent incorrects
-        </ErrorAlert>
-      )}
-      <form onSubmit={onSubmit}>
-        <FormGrid
-          container
-          direction="column"
-          justify="center"
-          alignItems="center"
-        >
-          <Typography variant="h4">Login</Typography>
-          <TextField
-            id="username"
-            label="Utilisateur"
-            value={username}
-            onChange={(event) => setUsername(event.target.value)}
-          />
-          <TextField
-            id="password"
-            type="password"
-            label="Mot de passe"
-            value={password}
-            onChange={(event) => setPassword(event.target.value)}
-          />
-          <ConnectionButton type="submit" variant="contained" color="primary">
-            Connexion
-          </ConnectionButton>
-        </FormGrid>
-      </form>
-    </FormBox>
+    <>
+      <FormBox>
+        {hasLoginError && (
+          <ErrorAlert severity="error">
+            Vos identifiants semblent incorrects
+          </ErrorAlert>
+        )}
+        <form onSubmit={onSubmit}>
+          <FormGrid
+            container
+            direction="column"
+            justify="center"
+            alignItems="center"
+          >
+            <Typography variant="h4">Login</Typography>
+            <TextField
+              id="username"
+              label="Utilisateur"
+              value={username}
+              onChange={(event) => setUsername(event.target.value)}
+            />
+            <TextField
+              id="password"
+              type="password"
+              label="Mot de passe"
+              value={password}
+              onChange={(event) => setPassword(event.target.value)}
+            />
+            <ConnectionButton type="submit" variant="contained" color="primary">
+              Connexion
+            </ConnectionButton>
+          </FormGrid>
+        </form>
+      </FormBox>
+
+      <Footer>
+        <LogoCredits />
+      </Footer>
+    </>
   )
 }
 
@@ -85,6 +92,14 @@ const ConnectionButton = styled(Button)({
 
 const ErrorAlert = styled(Alert)({
   marginBottom: 15,
+})
+
+const Footer = styled(Box)({
+  position: 'absolute',
+  bottom: '1rem',
+  margin: 0,
+  width: '100%',
+  textAlign: 'center',
 })
 
 export default LoginPage
