@@ -1,7 +1,7 @@
 import { WorkoutProgram } from './workout-program'
 
 export interface Workout {
-  id: number
+  id?: number
   strokes: number
   time: number
   distance: number
