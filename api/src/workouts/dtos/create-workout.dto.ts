@@ -1,6 +1,6 @@
 import { Type } from 'class-transformer'
 import { IsDate, IsEnum, IsNumber, IsOptional } from 'class-validator'
-import { Program } from './program.enum'
+import { Program } from '../program.enum'
 
 export class CreateWorkout {
   @IsNumber()

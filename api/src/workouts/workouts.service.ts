@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
+import { WorkoutsQuery } from './dtos/workouts-query.dto'
 import { Workout } from './workout.entity'
 
 @Injectable()
@@ -14,8 +15,14 @@ export class WorkoutsService {
     return this.workoutsRepo.save(workout)
   }
 
-  async findAll(): Promise<Workout[]> {
-    return this.workoutsRepo.find()
+  async findAll(query: WorkoutsQuery): Promise<Workout[]> {
+    const queryBuilder = this.workoutsRepo.createQueryBuilder()
+    if (query.beginDate && query.endDate) {
+      queryBuilder
+        .where('date >= :beginDate', { beginDate: query.beginDate })
+        .andWhere('date <= :endDate', { endDate: query.endDate })
+    }
+    return queryBuilder.getMany()
   }
 
   async findOne(id: number): Promise<Workout> {
@@ -24,34 +31,6 @@ export class WorkoutsService {
 
   async findLast(): Promise<Workout> {
     return this.workoutsRepo.findOne({ order: { date: 'DESC' } })
-  }
-
-  async count(): Promise<number> {
-    return this.workoutsRepo.count()
-  }
-
-  async getCountForMonth(year: number, month: number): Promise<number> {
-    const result = await this.workoutsRepo
-      .createQueryBuilder()
-      .select('COUNT(id) AS count')
-      .where('date >= :beginDate AND date <= :endDate', {
-        beginDate: new Date(),
-        endDate: new Date(),
-      })
-      .getRawOne()
-    return result.count
-  }
-
-  async getKcalSumForMonth(year: number, month: number): Promise<number> {
-    const result = await this.workoutsRepo
-      .createQueryBuilder()
-      .select('SUM(kcal) AS sum')
-      .where('date >= :beginDate AND date <= :endDate', {
-        beginDate: new Date(),
-        endDate: new Date(),
-      })
-      .getRawOne()
-    return result.sum
   }
 
   async delete(id: number): Promise<void> {

@@ -7,10 +7,12 @@ import {
   Param,
   ParseIntPipe,
   Post,
+  Query,
   UseGuards,
 } from '@nestjs/common'
 import { AuthGuard } from '@nestjs/passport'
-import { CreateWorkout } from './create-workout.dto'
+import { CreateWorkout } from './dtos/create-workout.dto'
+import { WorkoutsQuery } from './dtos/workouts-query.dto'
 import { Workout } from './workout.entity'
 import { WorkoutsService } from './workouts.service'
 
@@ -22,29 +24,8 @@ export class WorkoutsController {
   constructor(private readonly workoutsService: WorkoutsService) {}
 
   @Get()
-  async getWorkouts(): Promise<Workout[]> {
-    return await this.workoutsService.findAll()
-  }
-
-  @Get('count')
-  async getWorkoutsCount(): Promise<number> {
-    return await this.workoutsService.count()
-  }
-
-  @Get('count/:year/:month')
-  async getWorkoutsCountForMonth(
-    @Param('year', new ParseIntPipe()) year: number,
-    @Param('month', new ParseIntPipe()) month: number,
-  ): Promise<number> {
-    return await this.workoutsService.getCountForMonth(year, month)
-  }
-
-  @Get('kcal-sum/:year/:month')
-  async getKcalSumForMonth(
-    @Param('year', new ParseIntPipe()) year: number,
-    @Param('month', new ParseIntPipe()) month: number,
-  ): Promise<number> {
-    return await this.workoutsService.getKcalSumForMonth(year, month)
+  async getWorkouts(@Query() query: WorkoutsQuery): Promise<Workout[]> {
+    return await this.workoutsService.findAll(query)
   }
 
   @Get('last')
