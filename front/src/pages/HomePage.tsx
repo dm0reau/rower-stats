@@ -5,7 +5,7 @@ import { apiFetcher } from '../api/client'
 import { Workout } from '../api/interfaces/workout'
 import AddFab from '../components/AddFab'
 import DashboardLayout from '../components/DashboardLayout'
-import WorkoutsTable from '../components/WorkoutsTable'
+import LastWorkoutCard from '../components/LastWorkoutCard'
 
 const HomePage: React.FC = () => {
   const { data: lastWorkout } = useSwr<Workout>('workouts/last', apiFetcher)
@@ -14,7 +14,7 @@ const HomePage: React.FC = () => {
     <DashboardLayout>
       <AddFab />
       {lastWorkout ? (
-        <WorkoutsTable workouts={[lastWorkout]} />
+        <LastWorkoutCard workout={lastWorkout} />
       ) : (
         <CircularProgress />
       )}
