@@ -1,4 +1,5 @@
 import {
+  CircularProgress,
   Paper,
   styled,
   Table,
@@ -9,18 +10,18 @@ import {
   TableRow,
 } from '@material-ui/core'
 import React from 'react'
+import useSwr from 'swr'
+import { apiFetcher } from '../api/client'
 import { Workout } from '../api/interfaces/workout'
 
-interface Props {
-  workouts: Workout[]
-}
+const MyTable = styled(Table)({
+  minWidth: 650,
+})
 
-const WorkoutsTable: React.FC<Props> = ({ workouts }) => {
-  const MyTable = styled(Table)({
-    minWidth: 650,
-  })
+const WorkoutsTable: React.FC = () => {
+  const { data: workouts } = useSwr<Workout[]>('workouts', apiFetcher)
 
-  return (
+  return workouts ? (
     <TableContainer component={Paper}>
       <MyTable aria-label="workouts table">
         <TableHead>
@@ -51,6 +52,8 @@ const WorkoutsTable: React.FC<Props> = ({ workouts }) => {
         </TableBody>
       </MyTable>
     </TableContainer>
+  ) : (
+    <CircularProgress />
   )
 }
 
