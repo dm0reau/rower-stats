@@ -22,7 +22,7 @@ export class WorkoutsService {
         .where('date >= :beginDate', { beginDate: query.beginDate })
         .andWhere('date <= :endDate', { endDate: query.endDate })
     }
-    return queryBuilder.getMany()
+    return queryBuilder.orderBy('date', 'DESC').getMany()
   }
 
   async findOne(id: number): Promise<Workout> {
