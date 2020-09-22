@@ -11,7 +11,6 @@ import {
 } from '@material-ui/core'
 import React from 'react'
 import useSwr from 'swr'
-import { apiFetcher } from '../api/client'
 import { Workout } from '../api/interfaces/workout'
 
 const MyTable = styled(Table)({
@@ -19,7 +18,7 @@ const MyTable = styled(Table)({
 })
 
 const WorkoutsTable: React.FC = () => {
-  const { data: workouts } = useSwr<Workout[]>('workouts', apiFetcher)
+  const { data: workouts } = useSwr<Workout[]>('workouts')
 
   return workouts ? (
     <TableContainer component={Paper}>

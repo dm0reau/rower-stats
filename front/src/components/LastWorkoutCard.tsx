@@ -7,12 +7,11 @@ import {
   makeStyles,
   Typography,
 } from '@material-ui/core'
-import { OpenInBrowser } from '@material-ui/icons'
+import { Visibility } from '@material-ui/icons'
 import { lightFormat } from 'date-fns'
 import React from 'react'
 import { Link } from 'react-router-dom'
 import useSwr from 'swr'
-import { apiFetcher } from '../api/client'
 import { Workout } from '../api/interfaces/workout'
 
 const useStyles = makeStyles({
@@ -22,7 +21,7 @@ const useStyles = makeStyles({
 })
 
 const LastWorkoutCard = () => {
-  const { data: lastWorkout } = useSwr<Workout>('workouts/last', apiFetcher)
+  const { data: lastWorkout } = useSwr<Workout>('workouts/last')
   const styles = useStyles()
 
   return (
@@ -46,7 +45,7 @@ const LastWorkoutCard = () => {
           <CardActions>
             <Link to={`/workouts/${lastWorkout.id}`}>
               <IconButton>
-                <OpenInBrowser />
+                <Visibility />
               </IconButton>
             </Link>
           </CardActions>

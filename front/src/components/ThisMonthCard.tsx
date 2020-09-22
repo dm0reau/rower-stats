@@ -7,7 +7,6 @@ import {
 } from '@material-ui/core'
 import React from 'react'
 import useSwr from 'swr'
-import { apiFetcher } from '../api/client'
 import { Workout } from '../api/interfaces/workout'
 import thisMonthWorkoutsUrl from '../api/this-month-workouts-url'
 
@@ -19,10 +18,7 @@ const useStyles = makeStyles({
 
 const ThisMonthCard = () => {
   const styles = useStyles()
-  const { data: monthWorkouts } = useSwr<Workout[]>(
-    thisMonthWorkoutsUrl(),
-    apiFetcher,
-  )
+  const { data: monthWorkouts } = useSwr<Workout[]>(thisMonthWorkoutsUrl())
 
   return (
     <Card>
