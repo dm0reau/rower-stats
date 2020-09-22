@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
   appContainer: {
     backgroundColor: '#FFF',
     padding: 0,
-    height: '100vh',
+    minHeight: '100vh',
     boxShadow: '5px 5px 8px 0px rgba(0,0,0,0.75)',
   },
   bodyBox: {
