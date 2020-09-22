@@ -2,15 +2,17 @@ import {
   Box,
   Button,
   FormControl,
+  FormLabel,
   InputLabel,
   makeStyles,
   NativeSelect,
   Paper,
+  Slider,
   TextField,
 } from '@material-ui/core'
 import { lightFormat } from 'date-fns'
 import React from 'react'
-import { useForm } from 'react-hook-form'
+import { Controller, useForm } from 'react-hook-form'
 import { useHistory } from 'react-router'
 import addWorkout from '../api/add-workout'
 import { Workout } from '../api/interfaces/workout'
@@ -52,14 +54,14 @@ const WorkoutFormPage: React.FC = () => {
     await addWorkout(newWorkout)
     history.push('/workouts')
   }
-  const { handleSubmit, register } = useForm<WorkoutFields>()
+  const { handleSubmit, register, control } = useForm<WorkoutFields>()
 
   return (
     <DashboardLayout>
       <Paper className={styles.paper}>
         <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
           <Box className={styles.fieldBox}>
-            <FormControl>
+            <FormControl fullWidth>
               <InputLabel>Programme</InputLabel>
               <NativeSelect
                 inputRef={register}
@@ -98,18 +100,22 @@ const WorkoutFormPage: React.FC = () => {
               inputRef={register}
             />
           </Box>
-          <Box className={styles.fieldBox}>
-            <TextField
-              name="resistance"
-              fullWidth
-              type="number"
-              label="Résistance max"
-              inputProps={{ min: 1, max: 15 }}
-              required={true}
-              inputRef={register}
-            />
+          <Box style={{ marginTop: '1.5rem' }}>
+            <FormControl fullWidth>
+              <FormLabel>Résistance</FormLabel>
+              <Controller
+                as={Slider}
+                control={control}
+                marks
+                valueLabelDisplay="auto"
+                name="resistance"
+                defaultValue={8}
+                min={1}
+                max={15}
+              />
+            </FormControl>
           </Box>
-          <Box className={styles.fieldBox}>
+          <Box>
             <TextField
               name="kcal"
               fullWidth
