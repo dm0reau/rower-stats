@@ -7,6 +7,5 @@ export interface WorkoutFields {
   kcal: string
   date: string
   resistance: string
-  strokes: string
   program: WorkoutProgram
 }

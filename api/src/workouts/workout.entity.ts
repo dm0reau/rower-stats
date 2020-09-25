@@ -7,9 +7,6 @@ export class Workout {
   id: number
 
   @Column({ unsigned: true })
-  strokes: number
-
-  @Column({ unsigned: true })
   time: number
 
   @Column({ unsigned: true })

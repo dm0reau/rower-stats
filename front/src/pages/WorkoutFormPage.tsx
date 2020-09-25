@@ -44,7 +44,6 @@ const WorkoutFormPage: React.FC = () => {
       distance: +workoutFields.distance,
       kcal: +workoutFields.kcal,
       resistance: +workoutFields.resistance,
-      strokes: +workoutFields.strokes,
       time: +workoutFields.time,
       program: workoutFields.program,
       date: new Date(workoutFields.date),
@@ -118,17 +117,6 @@ const WorkoutFormPage: React.FC = () => {
               type="number"
               label="Calories (en kcal)"
               inputProps={{ min: 1 }}
-              required={true}
-              inputRef={register}
-            />
-          </Box>
-          <Box className={styles.fieldBox}>
-            <TextField
-              name="strokes"
-              type="number"
-              label="Cadence"
-              inputProps={{ min: 1 }}
-              fullWidth
               required={true}
               inputRef={register}
             />

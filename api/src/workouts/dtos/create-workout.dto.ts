@@ -4,9 +4,6 @@ import { Program } from '../program.enum'
 
 export class CreateWorkout {
   @IsNumber()
-  strokes: number
-
-  @IsNumber()
   time: number
 
   @IsNumber()

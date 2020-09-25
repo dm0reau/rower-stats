@@ -30,7 +30,6 @@ const WorkoutsTable: React.FC = () => {
             <TableCell align="right">Distance parcourue</TableCell>
             <TableCell align="right">Calories brulées</TableCell>
             <TableCell align="right">Résistance</TableCell>
-            <TableCell align="right">Cadence</TableCell>
             <TableCell align="right">Programme utilisé</TableCell>
           </TableRow>
         </TableHead>
@@ -44,7 +43,6 @@ const WorkoutsTable: React.FC = () => {
               <TableCell align="right">{workout.distance}</TableCell>
               <TableCell align="right">{workout.kcal}</TableCell>
               <TableCell align="right">{workout.resistance}</TableCell>
-              <TableCell align="right">{workout.strokes}</TableCell>
               <TableCell align="right">{workout.program}</TableCell>
             </TableRow>
           ))}
