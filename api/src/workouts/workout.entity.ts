@@ -9,7 +9,7 @@ export class Workout {
   @Column({ unsigned: true })
   time: number
 
-  @Column({ unsigned: true })
+  @Column('float', { unsigned: true })
   distance: number
 
   @Column({ unsigned: true })
