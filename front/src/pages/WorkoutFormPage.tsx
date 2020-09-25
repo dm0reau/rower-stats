@@ -85,6 +85,7 @@ const WorkoutFormPage: React.FC = () => {
               fullWidth
               required={true}
               inputRef={register}
+              defaultValue={30}
             />
           </Box>
           <Box className={styles.fieldBox}>
@@ -93,7 +94,7 @@ const WorkoutFormPage: React.FC = () => {
               fullWidth
               type="number"
               label="Distance (en KM)"
-              inputProps={{ step: 0.1, min: 0.1 }}
+              inputProps={{ step: 0.01, min: 0.01 }}
               required={true}
               inputRef={register}
             />
@@ -107,6 +108,7 @@ const WorkoutFormPage: React.FC = () => {
               inputProps={{ min: 1, max: 15 }}
               required={true}
               inputRef={register}
+              defaultValue={8}
             />
           </Box>
           <Box className={styles.fieldBox}>
