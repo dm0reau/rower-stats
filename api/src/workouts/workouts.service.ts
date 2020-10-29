@@ -7,6 +7,8 @@ import { Workout } from './workout.entity'
 
 @Injectable()
 export class WorkoutsService {
+  private readonly QUERY_DEFAULT_LIMIT = 10
+
   constructor(
     @InjectRepository(Workout)
     private workoutsRepo: Repository<Workout>,
@@ -29,6 +31,11 @@ export class WorkoutsService {
       queryBuilder
         .where('date >= :beginDate', { beginDate: query.beginDate })
         .andWhere('date <= :endDate', { endDate: query.endDate })
+    }
+    if (query.limit && query.limit > 0) {
+      queryBuilder.limit(query.limit)
+    } else {
+      queryBuilder.limit(this.QUERY_DEFAULT_LIMIT)
     }
     return queryBuilder.orderBy('date', 'DESC').getMany()
   }
