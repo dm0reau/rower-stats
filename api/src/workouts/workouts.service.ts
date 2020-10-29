@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
-import { Repository } from 'typeorm'
+import { Repository, UpdateResult } from 'typeorm'
+import { UpdateWorkout } from './dtos/update-workout.dto'
 import { WorkoutsQuery } from './dtos/workouts-query.dto'
 import { Workout } from './workout.entity'
 
@@ -13,6 +14,13 @@ export class WorkoutsService {
 
   async create(workout: Workout): Promise<Workout> {
     return this.workoutsRepo.save(workout)
+  }
+
+  async update(
+    workoutId: number,
+    workoutUpdate: UpdateWorkout,
+  ): Promise<UpdateResult> {
+    return this.workoutsRepo.update(workoutId, workoutUpdate)
   }
 
   async findAll(query: WorkoutsQuery): Promise<Workout[]> {
