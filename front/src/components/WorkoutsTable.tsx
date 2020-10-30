@@ -16,6 +16,7 @@ import EditIcon from '@material-ui/icons/Edit'
 import { format } from 'date-fns'
 import { fr } from 'date-fns/locale'
 import React from 'react'
+import { useHistory } from 'react-router'
 import useSwr, { mutate } from 'swr'
 import apiDeleteWorkout from '../api/delete-workout'
 import { Workout } from '../api/interfaces/workout'
@@ -32,6 +33,7 @@ const workoutsRequest = `workouts?limit=${WORKOUTS_LIMIT}`
 const WorkoutsTable: React.FC = () => {
   const { data: workouts } = useSwr<Workout[]>(workoutsRequest)
   const styles = useCardStyles()
+  const history = useHistory()
 
   const deleteWorkout = async (workoutId: number) => {
     if (!window.confirm('Êtes-vous de vouloir supprimer cette séance ?')) return
@@ -77,7 +79,9 @@ const WorkoutsTable: React.FC = () => {
                   {getReadableWorkoutProgram(workout.program)}
                 </TableCell>
                 <TableCell align="center">
-                  <IconButton>
+                  <IconButton
+                    onClick={() => history.push(`/workouts/edit/${workout.id}`)}
+                  >
                     <EditIcon />
                   </IconButton>
                   <IconButton

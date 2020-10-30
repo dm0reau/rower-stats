@@ -24,6 +24,9 @@ const App: React.FC = () => {
             <PrivateRoute path="/workouts/new" exact={true}>
               <WorkoutFormPage />
             </PrivateRoute>
+            <PrivateRoute path="/workouts/edit/:workoutId">
+              <WorkoutFormPage />
+            </PrivateRoute>
             <PrivateRoute path="/">
               <HomePage />
             </PrivateRoute>

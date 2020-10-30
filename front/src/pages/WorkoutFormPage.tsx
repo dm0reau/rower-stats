@@ -20,6 +20,10 @@ import { WorkoutFields } from '../interfaces/workout-fields'
 import { getDefaultDateFormat } from '../utils/date-format'
 import { getReadableWorkoutProgram } from '../utils/workout-program-format'
 
+interface Params {
+  workoutId?: string
+}
+
 const useStyles = makeStyles({
   paper: {
     minWidth: '16rem',
@@ -69,7 +73,7 @@ const WorkoutFormPage: React.FC = () => {
                 defaultValue={WorkoutProgram.Kcal1}
               >
                 {Object.values(WorkoutProgram).map((workoutProgram) => (
-                  <option value={workoutProgram}>
+                  <option key={workoutProgram} value={workoutProgram}>
                     {getReadableWorkoutProgram(
                       workoutProgram as WorkoutProgram,
                     )}
