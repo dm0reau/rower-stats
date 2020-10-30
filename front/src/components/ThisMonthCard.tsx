@@ -2,22 +2,16 @@ import {
   Card,
   CardContent,
   CircularProgress,
-  makeStyles,
   Typography,
 } from '@material-ui/core'
 import React from 'react'
 import useSwr from 'swr'
 import { Workout } from '../api/interfaces/workout'
 import thisMonthWorkoutsUrl from '../api/this-month-workouts-url'
-
-const useStyles = makeStyles({
-  title: {
-    fontSize: 14,
-  },
-})
+import { useCardStyles } from '../styles/card'
 
 const ThisMonthCard = () => {
-  const styles = useStyles()
+  const styles = useCardStyles()
   const { data: monthWorkouts } = useSwr<Workout[]>(thisMonthWorkoutsUrl())
 
   return (

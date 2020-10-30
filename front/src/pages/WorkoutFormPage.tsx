@@ -12,12 +12,13 @@ import { lightFormat } from 'date-fns'
 import React from 'react'
 import { useForm } from 'react-hook-form'
 import { useHistory } from 'react-router'
-import addWorkout from '../api/add-workout'
+import apiAddWorkout from '../api/add-workout'
 import { Workout } from '../api/interfaces/workout'
 import { WorkoutProgram } from '../api/interfaces/workout-program'
 import DashboardLayout from '../components/DashboardLayout'
 import { WorkoutFields } from '../interfaces/workout-fields'
 import { getDefaultDateFormat } from '../utils/date-format'
+import { getReadableWorkoutProgram } from '../utils/workout-program-format'
 
 const useStyles = makeStyles({
   paper: {
@@ -48,7 +49,7 @@ const WorkoutFormPage: React.FC = () => {
       program: workoutFields.program,
       date: new Date(workoutFields.date),
     }
-    await addWorkout(newWorkout)
+    await apiAddWorkout(newWorkout)
     history.push('/workouts')
   }
   const { handleSubmit, register } = useForm<WorkoutFields>()
@@ -67,11 +68,13 @@ const WorkoutFormPage: React.FC = () => {
                 required={true}
                 defaultValue={WorkoutProgram.Kcal1}
               >
-                <option value={WorkoutProgram.Kcal1}>Kcal 1</option>
-                <option value={WorkoutProgram.Kcal2}>Kcal 2</option>
-                <option value={WorkoutProgram.Fitness1}>Fitness 1</option>
-                <option value={WorkoutProgram.Fitness2}>Fitness 2</option>
-                <option value={WorkoutProgram.Fitness3}>Fitness 3</option>
+                {Object.values(WorkoutProgram).map((workoutProgram) => (
+                  <option value={workoutProgram}>
+                    {getReadableWorkoutProgram(
+                      workoutProgram as WorkoutProgram,
+                    )}
+                  </option>
+                ))}
               </NativeSelect>
             </FormControl>
           </Box>
@@ -87,17 +90,7 @@ const WorkoutFormPage: React.FC = () => {
               defaultValue={30}
             />
           </Box>
-          <Box className={styles.fieldBox}>
-            <TextField
-              name="distance"
-              fullWidth
-              type="number"
-              label="Distance (en KM)"
-              inputProps={{ step: 0.01, min: 0.01 }}
-              required={true}
-              inputRef={register}
-            />
-          </Box>
+
           <Box className={styles.fieldBox}>
             <TextField
               name="resistance"
@@ -128,6 +121,17 @@ const WorkoutFormPage: React.FC = () => {
               label="SPM moyen"
               inputProps={{ min: 1 }}
               fullWidth
+              required={true}
+              inputRef={register}
+            />
+          </Box>
+          <Box className={styles.fieldBox}>
+            <TextField
+              name="distance"
+              fullWidth
+              type="number"
+              label="Distance (en KM)"
+              inputProps={{ step: 0.01, min: 0.01 }}
               required={true}
               inputRef={register}
             />

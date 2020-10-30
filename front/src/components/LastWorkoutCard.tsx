@@ -4,7 +4,6 @@ import {
   CardContent,
   CircularProgress,
   IconButton,
-  makeStyles,
   Typography,
 } from '@material-ui/core'
 import { Visibility } from '@material-ui/icons'
@@ -13,16 +12,11 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import useSwr from 'swr'
 import { Workout } from '../api/interfaces/workout'
-
-const useStyles = makeStyles({
-  title: {
-    fontSize: 14,
-  },
-})
+import { useCardStyles } from '../styles/card'
 
 const LastWorkoutCard = () => {
   const { data: lastWorkout } = useSwr<Workout>('workouts/last')
-  const styles = useStyles()
+  const styles = useCardStyles()
 
   return (
     <Card>
