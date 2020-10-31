@@ -6,7 +6,7 @@ import {
   makeStyles,
   NativeSelect,
   Paper,
-  TextField,
+  TextField
 } from '@material-ui/core'
 import { lightFormat } from 'date-fns'
 import React from 'react'
@@ -94,7 +94,6 @@ const WorkoutFormPage: React.FC = () => {
               defaultValue={30}
             />
           </Box>
-
           <Box className={styles.fieldBox}>
             <TextField
               name="resistance"
@@ -114,17 +113,6 @@ const WorkoutFormPage: React.FC = () => {
               type="number"
               label="Calories (en kcal)"
               inputProps={{ min: 1 }}
-              required={true}
-              inputRef={register}
-            />
-          </Box>
-          <Box className={styles.fieldBox}>
-            <TextField
-              name="spm"
-              type="number"
-              label="SPM moyen"
-              inputProps={{ min: 1 }}
-              fullWidth
               required={true}
               inputRef={register}
             />
