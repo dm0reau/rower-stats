@@ -1,8 +1,8 @@
-import { WorkoutFields } from '../interfaces/workout-fields'
-import apiClient from './client'
+import apiClient from '../client'
+import { Workout } from '../interfaces/workout'
 
 export default async function apiUpdateWorkout(
-  workout: WorkoutFields,
+  workout: Omit<Workout, 'id'>,
   workoutId: number,
 ) {
   return apiClient.put(`/workouts/${workoutId}`, workout)

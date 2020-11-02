@@ -8,17 +8,17 @@ import {
   Paper,
   TextField,
 } from '@material-ui/core'
-import { lightFormat } from 'date-fns'
 import React from 'react'
 import { useForm } from 'react-hook-form'
 import { WorkoutProgram } from '../api/interfaces/workout-program'
 import { WorkoutFields } from '../interfaces/workout-fields'
-import { getDefaultDateFormat } from '../utils/date-format'
+import { getFormattedDate } from '../utils/date-format'
 import { getReadableWorkoutProgram } from '../utils/workout-program-format'
 import DashboardLayout from './DashboardLayout'
 
 interface Props {
   onSubmit: (workoutFields: WorkoutFields) => Promise<void>
+  defaultValues?: WorkoutFields
 }
 
 const useStyles = makeStyles({
@@ -38,9 +38,11 @@ const useStyles = makeStyles({
   },
 })
 
-const WorkoutForm: React.FC<Props> = ({ onSubmit }) => {
+const WorkoutForm: React.FC<Props> = ({ onSubmit, defaultValues }) => {
   const styles = useStyles()
-  const { handleSubmit, register } = useForm<WorkoutFields>()
+  const { handleSubmit, register } = useForm<WorkoutFields>({
+    defaultValues,
+  })
 
   return (
     <DashboardLayout>
@@ -119,13 +121,13 @@ const WorkoutForm: React.FC<Props> = ({ onSubmit }) => {
               type="date"
               label="Date"
               required={true}
-              defaultValue={lightFormat(new Date(), getDefaultDateFormat())}
+              defaultValue={getFormattedDate(new Date())}
               inputRef={register}
             />
           </Box>
           <Box className={styles.submitButton}>
             <Button type="submit" fullWidth color="primary" variant="contained">
-              Ajouter
+              {defaultValues ? 'Editer' : 'Ajouter'}
             </Button>
           </Box>
         </form>

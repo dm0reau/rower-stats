@@ -7,5 +7,5 @@ export interface Workout {
   kcal: number
   resistance: number
   program: WorkoutProgram
-  date: Date
+  date: string
 }

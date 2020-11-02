@@ -4,9 +4,10 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import { SWRConfig } from 'swr'
 import { apiFetcher } from './api/client'
 import PrivateRoute from './components/PrivateRoute'
+import EditWorkoutPage from './pages/EditWorkoutPage'
 import HomePage from './pages/HomePage'
 import LoginPage from './pages/LoginPage'
-import WorkoutFormPage from './pages/WorkoutFormPage'
+import NewWorkoutPage from './pages/NewWorkoutPage'
 
 const App: React.FC = () => {
   return (
@@ -22,10 +23,10 @@ const App: React.FC = () => {
               <LoginPage />
             </Route>
             <PrivateRoute path="/workouts/new" exact={true}>
-              <WorkoutFormPage />
+              <NewWorkoutPage />
             </PrivateRoute>
             <PrivateRoute path="/workouts/edit/:workoutId">
-              <WorkoutFormPage />
+              <EditWorkoutPage />
             </PrivateRoute>
             <PrivateRoute path="/">
               <HomePage />

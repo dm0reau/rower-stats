@@ -1,11 +1,11 @@
 import React from 'react'
 import { useHistory } from 'react-router'
-import apiAddWorkout from '../api/add-workout'
 import { Workout } from '../api/interfaces/workout'
+import apiAddWorkout from '../api/workouts/add'
 import WorkoutForm from '../components/WorkoutForm'
 import { WorkoutFields } from '../interfaces/workout-fields'
 
-const WorkoutFormPage: React.FC = () => {
+const NewWorkoutPage: React.FC = () => {
   const history = useHistory()
 
   const onSubmit = async (workoutFields: WorkoutFields) => {
@@ -15,7 +15,7 @@ const WorkoutFormPage: React.FC = () => {
       resistance: +workoutFields.resistance,
       time: +workoutFields.time,
       program: workoutFields.program,
-      date: new Date(workoutFields.date),
+      date: workoutFields.date,
     }
     await apiAddWorkout(newWorkout)
     history.push('/workouts')
@@ -24,4 +24,4 @@ const WorkoutFormPage: React.FC = () => {
   return <WorkoutForm onSubmit={onSubmit} />
 }
 
-export default WorkoutFormPage
+export default NewWorkoutPage
