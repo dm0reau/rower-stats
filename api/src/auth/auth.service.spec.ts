@@ -1,12 +1,13 @@
 import { ConfigModule, ConfigService } from '@nestjs/config'
 import { JwtModule } from '@nestjs/jwt'
 import { Test, TestingModule } from '@nestjs/testing'
-import { getEnvVar } from 'src/helpers'
 import { AuthService } from './auth.service'
-import { jwtConstants } from './constants'
 import { User } from './interfaces/user.interface'
 
 describe('AuthService', () => {
+  const JWT_TOKEN_SECRET = 'VerySecretJwtSecret'
+  const JWT_EXPIRATION_TIME = 3600
+
   let authService: AuthService
   let configService: ConfigService
 
@@ -15,8 +16,8 @@ describe('AuthService', () => {
       imports: [
         ConfigModule.forRoot({ isGlobal: true }),
         JwtModule.register({
-          secret: jwtConstants.secret,
-          signOptions: { expiresIn: `${getEnvVar('JWT_EXPIRATION_TIME')}s` },
+          secret: JWT_TOKEN_SECRET,
+          signOptions: { expiresIn: `${JWT_EXPIRATION_TIME}s` },
         }),
       ],
       providers: [AuthService],
@@ -36,8 +37,8 @@ describe('AuthService', () => {
     expect(authService.validateUser(envUsername, envPassword))
   })
 
-  it('should give an access token at login', () => {
-    const user: User = { userId: 'johndoe', username: 'johndoe' }
-    expect(authService.login(user)).toHaveProperty('accessToken')
+  it('should give a JWT token', () => {
+    const user: User = { username: 'John' }
+    expect(authService.getJwtToken(user).length > 36).toBeTruthy()
   })
 })
