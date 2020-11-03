@@ -15,7 +15,10 @@ import { WorkoutsModule } from './workouts/workouts.module'
       port: 3306,
       username: getEnvVar('DB_USER'),
       password: getEnvVar('DB_PASSWORD'),
-      database: getEnvVar('DB_NAME'),
+      database:
+        process.env.NODE_ENV === 'test'
+          ? getEnvVar('TEST_DB_NAME')
+          : getEnvVar('DB_NAME'),
       synchronize: true,
       autoLoadEntities: true,
     }),

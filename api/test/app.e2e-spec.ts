@@ -1,24 +1,28 @@
-import { Test, TestingModule } from '@nestjs/testing';
-import { INestApplication } from '@nestjs/common';
-import * as request from 'supertest';
-import { AppModule } from './../src/app.module';
+import { INestApplication } from '@nestjs/common'
+import { Test, TestingModule } from '@nestjs/testing'
+import { Connection } from 'typeorm'
+import { AppModule } from './../src/app.module'
 
 describe('AppController (e2e)', () => {
-  let app: INestApplication;
+  let app: INestApplication
+  let connection: Connection
 
-  beforeEach(async () => {
+  beforeAll(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
       imports: [AppModule],
-    }).compile();
+    }).compile()
 
-    app = moduleFixture.createNestApplication();
-    await app.init();
-  });
+    app = moduleFixture.createNestApplication()
+    await app.init()
+    connection = app.get(Connection)
+  })
 
-  it('/ (GET)', () => {
-    return request(app.getHttpServer())
-      .get('/')
-      .expect(200)
-      .expect('Hello World!');
-  });
-});
+  afterAll(async () => {
+    connection.close()
+    app.close()
+  })
+
+  it('should be on test DB', () => {
+    expect(connection.options.database).toBe('rower-stats-test')
+  })
+})

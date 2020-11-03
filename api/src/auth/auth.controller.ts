@@ -9,7 +9,7 @@ import {
 } from '@nestjs/common'
 import { AuthGuard } from '@nestjs/passport'
 import { CookieOptions, Response } from 'express'
-import { getEnvVar } from 'src/helpers'
+import { getEnvVar } from '../helpers'
 import { AuthService } from './auth.service'
 import { AppRequest } from './interfaces/app-request.interface'
 import { User } from './interfaces/user.interface'
