@@ -13,7 +13,7 @@ services:
     environment:
       NODE_ENV: development
       DB_HOST: db
-      DB_NAME: rower-stats
+      DB_NAME: rower-stats-development
       DB_USER: root
       DB_PASSWORD: root
       USER_NAME: david
@@ -46,9 +46,9 @@ services:
     image: mariadb:10.3
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: rower-stats
     volumes:
       - mariadb-data:/var/lib/mysql
+      - ./create-databases.sql:/docker-entrypoint-initdb.d/create-databases.sql
 
   adminer:
     image: adminer
