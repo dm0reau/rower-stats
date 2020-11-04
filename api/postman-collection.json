@@ -16,8 +16,10 @@
 							"pm.test(\"Status code is 201\", function () {",
 							"    pm.response.to.have.status(201);",
 							"});",
+							"",
 							"pm.test(\"Set auth token\", function () {",
-							"    pm.environment.set(\"token\", pm.response.json().accessToken);",
+							"    const cookieJar = pm.cookies.jar();",
+							"    cookieJar.set('localhost', 'Authentication', pm.cookies.get('Authentication'))",
 							"});"
 						],
 						"type": "text/javascript"
@@ -38,7 +40,6 @@
 					"mode": "raw",
 					"raw": "{\n\t\"username\": \"david\",\n\t\"password\": \"VerySecretPassword\"\n}",
 					"options": {
-						"formdata": {},
 						"raw": {
 							"language": "json"
 						}
@@ -58,7 +59,37 @@
 			"response": []
 		},
 		{
+			"name": "Current user",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/auth/me",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"auth",
+						"me"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Create workout",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "1a4ebcce-e1e8-4922-a94d-d3db90feabbe",
+						"exec": [
+							"pm.environment.set(\"workoutId\", pm.response.json().id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "POST",
 				"header": [
@@ -71,7 +102,10 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"strokes\": 100,\n    \"time\": 200,\n    \"distance\": 5,\n    \"kcal\": 100,\n    \"program\": \"fitness3\",\n    \"resistance\": 5\n}"
+					"raw": "{\n    \"strokes\": 100,\n    \"time\": 200,\n    \"distance\": 5,\n    \"kcal\": 100,\n    \"program\": \"fitness3\",\n    \"resistance\": 5\n}",
+					"options": {
+						"raw": {}
+					}
 				},
 				"url": {
 					"raw": "{{host}}/workouts/",
@@ -87,106 +121,39 @@
 			"response": []
 		},
 		{
-			"name": "Get workouts",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{host}}/workouts",
-					"host": [
-						"{{host}}"
-					],
-					"path": [
-						"workouts"
-					]
+			"name": "Update workout",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "8618a799-4d7a-45ff-bea4-fadb468a5f00",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
 				}
-			},
-			"response": []
-		},
-		{
-			"name": "Get workout by ID",
+			],
 			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "{{auth_token}}",
-							"type": "string"
-						}
-					]
-				},
-				"method": "GET",
+				"method": "PUT",
 				"header": [],
-				"url": {
-					"raw": "localhost:3000/workouts/1",
-					"host": [
-						"localhost"
-					],
-					"port": "3000",
-					"path": [
-						"workouts",
-						"1"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Workouts count",
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "{{auth_token}}",
-							"type": "string"
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"kcal\": 102,\n    \"program\": \"fitness1\",\n    \"resistance\": 10\n}",
+					"options": {
+						"raw": {
+							"language": "json"
 						}
-					]
+					}
 				},
-				"method": "GET",
-				"header": [],
 				"url": {
-					"raw": "{{host}}/workouts/count/2019/12",
+					"raw": "{{host}}/workouts/{{workoutId}}",
 					"host": [
 						"{{host}}"
 					],
 					"path": [
 						"workouts",
-						"count",
-						"2019",
-						"12"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Kcal sum for month",
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "{{auth_token}}",
-							"type": "string"
-						}
-					]
-				},
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{host}}/workouts/kcal-sum/2019/11",
-					"host": [
-						"{{host}}"
-					],
-					"path": [
-						"workouts",
-						"kcal-sum",
-						"2019",
-						"11"
+						"{{workoutId}}"
 					]
 				}
 			},
@@ -216,33 +183,140 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": ""
+					"raw": "",
+					"options": {
+						"raw": {}
+					}
 				},
 				"url": {
-					"raw": "localhost:3000/workouts/4",
+					"raw": "localhost:4000/workouts/2",
 					"host": [
 						"localhost"
 					],
-					"port": "3000",
+					"port": "4000",
 					"path": [
 						"workouts",
-						"4"
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get current user",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/auth/me",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"auth",
+						"me"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get workouts with limit",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/workouts?limit=5",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"workouts"
+					],
+					"query": [
+						{
+							"key": "limit",
+							"value": "5"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get workouts for interval",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/workouts?beginDate=2020-08-01T00:00:00&endDate=2020-08-30T23:59:00",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"workouts"
+					],
+					"query": [
+						{
+							"key": "beginDate",
+							"value": "2020-08-01T00:00:00"
+						},
+						{
+							"key": "endDate",
+							"value": "2020-08-30T23:59:00"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get workout by ID",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{auth_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/workouts/15",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"workouts",
+						"15"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get last workout",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/workouts/last",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"workouts",
+						"last"
 					]
 				}
 			},
 			"response": []
 		}
 	],
-	"auth": {
-		"type": "bearer",
-		"bearer": [
-			{
-				"key": "token",
-				"value": "{{token}}",
-				"type": "string"
-			}
-		]
-	},
 	"event": [
 		{
 			"listen": "prerequest",
@@ -267,10 +341,9 @@
 	],
 	"variable": [
 		{
-			"id": "75138697-17a4-46cf-8f1c-91f9e874922a",
+			"id": "735f8419-56ec-48f2-b42e-009fe0690255",
 			"key": "host",
-			"value": "http://localhost:3000",
-			"type": "string"
+			"value": "http://localhost:4000"
 		}
 	],
 	"protocolProfileBehavior": {}

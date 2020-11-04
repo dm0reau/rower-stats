@@ -49,7 +49,7 @@ export class AuthController {
   private getCookieOptions(): CookieOptions {
     const jwtExpirationTime = +getEnvVar('JWT_EXPIRATION_TIME')
     const cookieDomain = getEnvVar('COOKIE_DOMAIN')
-    const nodeEnv = getEnvVar('NODE_ENV')
+    const nodeEnv = process.env.NODE_ENV
     return {
       maxAge: jwtExpirationTime * 1000,
       httpOnly: true,

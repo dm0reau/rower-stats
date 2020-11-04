@@ -1,0 +1,32 @@
+entity: Workout
+items:
+  workout1:
+    time: 25
+    distance: 1.95
+    kcal: 95
+    resistance: 9
+    program: kcal1
+    date: '2020-01-01'
+  workout2:
+    time: 30
+    distance: 2.01
+    kcal: 102
+    resistance: 10
+    program: kcal2
+    date: '2020-01-10'
+  workout3:
+    time: 20
+    distance: 1.75
+    kcal: 85
+    resistance: 12
+    program: fitness1
+    date: '2020-01-16'
+  workout4:
+    time: 20
+    distance: 2.20
+    kcal: 104
+    resistance: 11
+    program: fitness2
+    date: '2020-02-16'
+
+
